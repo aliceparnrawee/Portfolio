@@ -1,0 +1,54 @@
+import numpy as np
+import pandas as pd
+from datetime import date
+import os
+
+def process_and_save_michelin_file(file_path, star_rating, output_path):
+    df = pd.read_csv(file_path)
+    
+    # Drop 'url' column if it exists
+    if 'url' in df.columns:
+        df = df.drop(columns=['url'])
+    
+    # Drop rows with missing values
+    df = df.dropna()
+    
+    # Add 'star' column
+    df['star'] = star_rating
+    
+    # Save the cleaned DataFrame to a new CSV file
+    df.to_csv(output_path, index=False)
+    return df
+
+# File paths
+one_star_file = r'C:\Users\pweve\BSYS 4001\Data\one-star-michelin-restaurants.csv'
+two_stars_file = r'C:\Users\pweve\BSYS 4001\Data\two-stars-michelin-restaurants.csv'
+three_stars_file = r'C:\Users\pweve\BSYS 4001\Data\three-stars-michelin-restaurants.csv'
+
+# Output paths for cleaned files
+cleaned_one_star_file = r'C:\Users\pweve\BSYS 4001\Data\cleaned_one_star_michelin_restaurants.csv'
+cleaned_two_stars_file = r'C:\Users\pweve\BSYS 4001\Data\cleaned_two_stars_michelin_restaurants.csv'
+cleaned_three_stars_file = r'C:\Users\pweve\BSYS 4001\Data\cleaned_three_stars_michelin_restaurants.csv'
+
+# Process and save each file
+one_star_df = process_and_save_michelin_file(one_star_file, 1, cleaned_one_star_file)
+two_stars_df = process_and_save_michelin_file(two_stars_file, 2, cleaned_two_stars_file)
+three_stars_df = process_and_save_michelin_file(three_stars_file, 3, cleaned_three_stars_file)
+
+# Load the cleaned files
+cleaned_one_star_df = pd.read_csv(cleaned_one_star_file)
+cleaned_two_stars_df = pd.read_csv(cleaned_two_stars_file)
+cleaned_three_stars_df = pd.read_csv(cleaned_three_stars_file)
+
+# Merge all cleaned DataFrames
+merged_df = pd.concat([cleaned_one_star_df, cleaned_two_stars_df, cleaned_three_stars_df])
+
+# Save the merged DataFrame to a new CSV file
+merged_file_path = r'C:\Users\pweve\BSYS 4001\Data\merged_michelin_restaurants.csv'
+merged_df.to_csv(merged_file_path, index=False)
+
+print("Merged DataFrame saved to 'merged_michelin_restaurants.csv'")
+
+# Display the shape and the first few rows of the merged DataFrame
+print("Shape of the merged DataFrame:", merged_df.shape)
+merged_df.head()
