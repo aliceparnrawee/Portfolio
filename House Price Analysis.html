@@ -51,7 +51,7 @@ print("There are ", house.shape[0], " rows and ", house.shape[1], " columns")
 # Visually inspect
 house
 
-![House Data Table](https://github.com/aliceparnrawee/Portfolio/blob/main/HP_visual%20table.jpg?raw=true)
+![House Data Table](https://github.com/aliceparnrawee/Portfolio/raw/main/HP_visual%20table.jpg)
 
 # Drop unnecessary columns
 house = house.drop(columns = ['Zip Code','Address','Zip Code Population', 'Zip Code Density', 'County', 'Latitude', 'Longitude'])
@@ -65,7 +65,7 @@ print("Now there are ", house.shape[0], " rows and ", house.shape[1], " columns"
 # Visually inspect
 house.head()
 
-![Cleaned House Data Table](https://github.com/aliceparnrawee/Portfolio/blob/main/HP_visual%20table2.jpg?raw=true)
+![Cleaned House Data Table](https://github.com/aliceparnrawee/Portfolio/raw/main/HP_visual%20table2.jpg)
 
 # Define X and Y
 X = house.drop(columns=["City"])
@@ -122,7 +122,7 @@ plt.xticks(range(X.shape[1]), [features[i] for i in indices], rotation=90)
 plt.tight_layout()
 plt.show()
 
-![Feature Importances](https://github.com/aliceparnrawee/Portfolio/blob/main/HP_feature%20importances.jpg?raw=true)
+![Feature Importances](https://github.com/aliceparnrawee/Portfolio/raw/main/HP_feature%20importances.jpg)
 
 # Example new house data
 new_house_data = pd.DataFrame({
@@ -162,5 +162,5 @@ print("Predicted City: ", predicted_city[0])
         <p><strong>Test Accuracy:</strong> 0.6997248624312156</p>
         <p><strong>Predicted City for New House:</strong> Sacramento</p>
     </div>
-    </body>
+</body>
 </html>
