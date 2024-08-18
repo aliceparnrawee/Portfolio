@@ -15860,44 +15860,43 @@ dtype: object
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[149]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Step 1: Convert &#39;Date&#39; to datetime format</span>
-<span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span>
 
-<span class="c1"># Step 2: Extract temporal features from &#39;Date&#39;</span>
+<span class="c1"># Extract temporal features from &#39;Date&#39;</span>
 <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;DayOfWeek&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofweek</span>  <span class="c1"># 0 = Monday, 6 = Sunday</span>
 <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;Month&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
 <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;IsWeekend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;DayOfWeek&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">5</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
 
-<span class="c1"># Step 3: Ensure &#39;Estimated Hr&#39; is numeric</span>
+<span class="c1"># Ensure &#39;Estimated Hr&#39; is numeric</span>
 <span class="c1"># If &#39;Estimated Hr&#39; is in &#39;HH:MM&#39; format, convert it to an integer hour</span>
 <span class="k">if</span> <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;Estimated Hr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;object&#39;</span><span class="p">:</span>
     <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;Estimated Hr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;Estimated Hr&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%H:%M&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
 
-<span class="c1"># Step 4: Encode the &#39;Type&#39; column using LabelEncoder</span>
+<span class="c1"># Encode the &#39;Type&#39; column using LabelEncoder</span>
 <span class="n">label_encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
 <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;Type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;Type&#39;</span><span class="p">])</span>
 
-<span class="c1"># Step 5: Select features and target</span>
+<span class="c1"># Select features and target</span>
 <span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Estimated Hr&#39;</span><span class="p">,</span> <span class="s1">&#39;precip_amt&#39;</span><span class="p">,</span> <span class="s1">&#39;Type&#39;</span><span class="p">,</span> <span class="s1">&#39;DayOfWeek&#39;</span><span class="p">,</span> <span class="s1">&#39;Month&#39;</span><span class="p">,</span> <span class="s1">&#39;IsWeekend&#39;</span><span class="p">]</span>
 <span class="n">target</span> <span class="o">=</span> <span class="s1">&#39;service_amt&#39;</span>  <span class="c1"># Assuming this is the demand column</span>
 
-<span class="c1"># Step 6: Split the dataset into features (X) and target (y)</span>
+<span class="c1"># Split the dataset into features (X) and target (y)</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">final_df</span><span class="p">[</span><span class="n">features</span><span class="p">]</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">final_df</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
 
-<span class="c1"># Step 7: Split the data into training and testing sets</span>
+<span class="c1"># Split the data into training and testing sets</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-<span class="c1"># Step 8: Initialize the model</span>
+<span class="c1"># Initialize the model</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-<span class="c1"># Step 9: Train the model</span>
+<span class="c1"># Train the model</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-<span class="c1"># Step 10: Make predictions</span>
+<span class="c1"># Make predictions</span>
 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
-<span class="c1"># Step 11: Evaluate the model</span>
+<span class="c1"># Evaluate the model</span>
 <span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
 <span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
 
